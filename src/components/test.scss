@@ -1,0 +1,99 @@
+$main: #ff6347;
+$sub: #ffa500;
+$point: #4682b4;
+$font: #fff;
+
+.box1 {
+  width: 500px;
+  height: 200px;
+  background: $main;
+}
+
+.box1-2 {
+  @extend .box1; //box1의 스타일을 상속받음
+  font-size: 50px;
+  color: $font;
+}
+
+.box2 {
+  width: 400px;
+  height: 100px;
+  background: $sub;
+}
+
+.box2 {
+  // 컴파일링( & 연산자: 자기자신 가르킴 ) -> .box2:hover (o)
+  &:hover {
+    background: $point;
+  }
+}
+
+.box3 {
+  width: 500px;
+  height: 500px;
+  background: $point;
+  h3 {
+    // 컴파일링 -> .box3 h3
+    font-size: 30px;
+    color: $font;
+    background: $main;
+  }
+  p {
+    // 컴파일링 -> .box3 p
+    font-size: 20px;
+    color: $font;
+  }
+}
+
+@mixin btn($color) {
+  font-size: 20px;
+  padding: 15px;
+  cursor: pointer;
+  background-color: $color;
+  outline: none;
+  border: 1px solid $color;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.btn1 {
+  @include btn(#597);
+  color: $font;
+}
+
+.btn2 {
+  @include btn(#479);
+  color: $font;
+}
+
+@mixin size($value) {
+  $wh: 30px * $value;
+  width: $wh;
+  height: $wh;
+}
+
+.container {
+  display: flex;
+  background: #777;
+  .box4 {
+    background: $sub;
+    text-align: right;
+    &.orange {
+      // 컴파일링 -> .box4.orange
+      background: orange;
+      @include size(3);
+    }
+    &.violet {
+      background: violet;
+      @include size(5);
+    }
+    &.tomato {
+      background: tomato;
+      @include size(2);
+    }
+    &.cornflowerblue {
+      background: cornflowerblue;
+      @include size(6);
+    }
+  }
+}
